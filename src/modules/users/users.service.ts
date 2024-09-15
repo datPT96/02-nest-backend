@@ -14,6 +14,10 @@ export class UsersService {
     private userModel: Model<User>,
   ) {}
 
+  async findByEmail(email: string) {
+    return await this.userModel.findOne({ email });
+  }
+
   async isEmailExist(email: string) {
     const user = await this.userModel.exists({ email });
     if (user) {

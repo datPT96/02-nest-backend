@@ -4,17 +4,19 @@ import { AppService } from '@/app.service';
 import { UsersModule } from '@/modules/users/users.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { RestaurantsModule } from './modules/restaurants/restaurants.module';
-import { MenusModule } from './modules/menus/menus.module';
-import { MenuItemsModule } from './modules/menu.items/menu.items.module';
-import { MenuItemOptionsModule } from './modules/menu.item.options/menu.item.options.module';
-import { OrdersModule } from './modules/orders/orders.module';
-import { OrderDetailModule } from './modules/order.detail/order.detail.module';
-import { ReviewsModule } from './modules/reviews/reviews.module';
-import { LikesModule } from './modules/likes/likes.module';
+import { RestaurantsModule } from '@/modules/restaurants/restaurants.module';
+import { MenusModule } from '@/modules/menus/menus.module';
+import { MenuItemsModule } from '@/modules/menu.items/menu.items.module';
+import { MenuItemOptionsModule } from '@/modules/menu.item.options/menu.item.options.module';
+import { OrdersModule } from '@/modules/orders/orders.module';
+import { OrderDetailModule } from '@/modules/order.detail/order.detail.module';
+import { ReviewsModule } from '@/modules/reviews/reviews.module';
+import { LikesModule } from '@/modules/likes/likes.module';
+import { AuthModule } from '@/auth/auth.module';
 
 @Module({
   imports: [
+    AuthModule,
     UsersModule,
     RestaurantsModule,
     MenusModule,
