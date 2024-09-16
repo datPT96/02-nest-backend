@@ -8,7 +8,7 @@ import mongoose, { Model } from 'mongoose';
 import aqp from 'api-query-params';
 import { CreateAuthDto } from '@/auth/dto/create-auth.dto';
 import { v4 as uuid } from 'uuid';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 
 @Injectable()
 export class UsersService {
