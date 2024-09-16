@@ -6,6 +6,9 @@ import { InjectModel } from '@nestjs/mongoose';
 import { User } from './schemas/user.schema';
 import mongoose, { Model } from 'mongoose';
 import aqp from 'api-query-params';
+import { CreateAuthDto } from '@/auth/dto/create-auth.dto';
+import { v4 as uuid } from 'uuid';
+import * as dayjs from 'dayjs';
 
 @Injectable()
 export class UsersService {
@@ -13,6 +16,33 @@ export class UsersService {
     @InjectModel(User.name)
     private userModel: Model<User>,
   ) {}
+
+  async handleRegister(registerDto: CreateAuthDto) {
+    const { email, name, password } = registerDto;
+    //check email exist
+    const isExist = await this.isEmailExist(email);
+    if (isExist) {
+      throw new BadRequestException(`Email existed: ${email}`);
+    }
+
+    //hashPassword
+    const hashPassword = await hashPasswordHelper(password);
+    const user = await this.userModel.create({
+      name,
+      email,
+      password: hashPassword,
+      isActive: false,
+      codeExpired: dayjs().add(5, 'minutes'),
+      codeId: uuid(),
+    });
+
+    //response
+
+    return {
+      _id: user._id,
+    };
+    //send email
+  }
 
   async findByEmail(email: string) {
     return await this.userModel.findOne({ email });
