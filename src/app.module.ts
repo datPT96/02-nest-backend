@@ -16,6 +16,8 @@ import { AuthModule } from '@/auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/passport/jwt-auth.guard';
 import { MailerModule } from '@nestjs-modules/mailer';
+import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -45,13 +47,14 @@ import { MailerModule } from '@nestjs-modules/mailer';
         defaults: {
           from: '"No reply" <no-reply@nestjs.com>',
         },
-        // template: {
-        //   dir: __dirname + '/templates',
-        //   adapter: new HandlebarsAdapter(),
-        //   options: {
-        //     strict: true,
-        //   },
-        // },
+        // preview: true,
+        template: {
+          dir: join(__dirname, 'mail/templates'),
+          adapter: new HandlebarsAdapter(),
+          options: {
+            strict: true,
+          },
+        },
       }),
       inject: [ConfigService],
     }),

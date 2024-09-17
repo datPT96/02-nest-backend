@@ -1,4 +1,8 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { UsersService } from '@/modules/users/users.service';
 import { comparePasswordHelper } from '@/helpers/util';
 import { JwtService } from '@nestjs/jwt';
@@ -36,6 +40,10 @@ export class AuthService {
 
     if (!user || !isValidPassword) {
       return null;
+    }
+
+    if (user.isActive === false) {
+      throw new BadRequestException('Account is not active');
     }
 
     return user;
